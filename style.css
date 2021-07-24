@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Barlow Condensed', sans-serif;
+    background-color: #FFCAB1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,4 +14,29 @@ body {
     height: 100vh;
     overflow: hidden;
     margin: 0;
+}
+
+.gridContainer{
+    background-color: #C1D7AE;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    height: 500px;
+    width: 500px;
+    border: 6px rgb(117, 112, 112) solid;
+}
+
+.gridElement{
+    background-color: #8CC084;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    width: 130px;
+    height: 130px;
+    border-radius: 15px;
+    font-size: 50px;
 }
