@@ -10,10 +10,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
     overflow: hidden;
     margin: 0;
+}
+
+h1{
+    text-align:center;
+    font-size: 50px;
+    width: 100%;
+    line-height: 100px;
+    height: 100px;
+    color: white;
+    background-color: rgb(117, 112, 112);
+    margin:0;
+
+}
+
+.playersTurn{
+    font-family: 'Barlow Condensed', sans-serif;
+    margin: 10px;
 }
 
 .gridContainer{
@@ -24,8 +40,8 @@ body {
     padding: 5px;
     border-radius: 15px;
     grid-template-columns: repeat(3, 1fr);
-    height: 500px;
-    width: 500px;
+    height: 450px;
+    width: 450px;
     border: 6px rgb(117, 112, 112) solid;
 }
 
@@ -35,8 +51,35 @@ body {
     justify-content: center;
     align-items: center;
     margin: 15px;
-    width: 130px;
-    height: 130px;
+    width: 110px;
+    height: 110px;
     border-radius: 15px;
     font-size: 50px;
+    cursor:pointer;
+}
+
+.gridElement:hover{
+    background-color: #83afad;
+}
+
+.restart {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+    width: 150px;
+    height: 50px;
+    border-radius: 15px;
+    border: 2px rgb(117, 112, 112) solid;
+    background-color: #8CC084;
+    margin-bottom: 30px;
+
+}
+
+.restart:hover{
+    background-color: #83afad;
+}
+
+.playersTurn{
+    font-size: 30px;
+    margin:25px;
 }
