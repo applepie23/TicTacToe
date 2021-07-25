@@ -8,8 +8,8 @@ let player = (name, turnOrder) => {
     if (turnOrder === 1){
         turnBol = true;
     }
+    //player playedArray index becomes 1 if corresponding square is played
     let playedArray = [0,0,0,0,0,0,0,0,0];
-    
     return { name, turnOrder, winner, turnBol, playedArray};
 };
 
@@ -20,6 +20,7 @@ var gameBoard = (function () {
     myModule.count = 0;
     myModule.playerTurn = 1;
     myModule.gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    //creates player X and player O
     myModule.player1 = player("player1", 1);
     myModule.player2 = player("player2", 2);
 
@@ -30,10 +31,8 @@ var gameBoard = (function () {
         for (let i = 0; i < 9; i++){
             let gridElement = document.createElement("div");
             gridElement.id = i;
-            //gridElement.innerHTML = array[i];
             gridElement.classList.add("gridElement");
             gridContainer.appendChild(gridElement);
-            //console.log(i);
         }
         document.body.appendChild(gridContainer);
     }
@@ -41,16 +40,18 @@ var gameBoard = (function () {
     myModule.isWinner = function(player) {
         let winner = false;
         let winCombinations = ["0,1,2", "3,4,5", "6,7,8", "0,3,6", "1,4,7", "2,5,8", "2,4,6", "0,4,8"];
+        //loops through winCombinations and checks if player has won
         for (let i = 0; i < 8; i++) {
             let winCombo = winCombinations[i];
             let winComboArray = winCombo.split(",");
-            //console.log(winComboArray);
+           
             let count = 0;
             for (let i = 0; i < 3; i++) {
                 if (player.playedArray[winComboArray[i]] === 1){
                     count++;
                 }
             }
+            //if players has all three squares of a winning combo
             if (count === 3){
                 winner = true;
             }
@@ -59,6 +60,7 @@ var gameBoard = (function () {
     }
 
     myModule.createButtons = function() {
+        //adds buttons to all 9 squares
         let zero = document.getElementById("0");
         zero.addEventListener('click', function (){playerTurn(0)});
         let one = document.getElementById("1");
@@ -80,20 +82,18 @@ var gameBoard = (function () {
     }
 
     let playerTurn = function(squareNum) {
+        //prevents new moves after game has ended
         if (myModule.gameOver === true){
-            console.log("game Over");
-            return
+            return;
         }
+        //prevents replays
         if (myModule.turnArray[squareNum] === 1){
-            console.log("replayed");
             return;
         }
         if (myModule.playerTurn === 1){
             myModule.player1.playedArray[squareNum] = 1;
             myModule.playerTurn = 2;
-            playersTurn.innerHTML = "Player O's turn";
-            //console.log(`Next Turn: ${myModule.playerTurn}`);
-            //console.log(`player 1: ${myModule.player1.playedArray}`);
+            playersTurn.innerHTML = "Player O's turn"; 
             const square = document.getElementById(squareNum);
             square.innerHTML = "X";
             myModule.count++;
@@ -101,18 +101,12 @@ var gameBoard = (function () {
             myModule.player2.playedArray[squareNum] = 1;
             myModule.playerTurn = 1;
             playersTurn.innerHTML = "Player X's turn";
-            //console.log(`Next Turn: ${myModule.playerTurn}`);
-            //console.log(`player 2: ${myModule.player2.playedArray}`);
             const square = document.getElementById(squareNum);
             square.innerHTML = "O";
             myModule.count++;
         }
         myModule.turnArray[squareNum] = 1;
-        //console.log(myModule.turnArray)
-        //console.log(myModule.count);
-        
         winnerStatus();
-        
     }
 
    let winnerStatus = function() {
@@ -129,23 +123,46 @@ var gameBoard = (function () {
             playersTurn.innerHTML = "It's a tie!";
             myModule.gameOver = true; 
         }
-        console.log(myModule.gameOver);
+    }
+
+    myModule.resetBoard = function(){
+        let zero = document.getElementById("0");
+        zero.innerHTML = "";
+        let one = document.getElementById("1");
+        one.innerHTML = "";
+        let two = document.getElementById("2");
+        two.innerHTML = "";
+        let three = document.getElementById("3");
+        three.innerHTML = "";
+        let four = document.getElementById("4");
+        four.innerHTML = "";
+        let five = document.getElementById("5");
+        five.innerHTML = "";
+        let six = document.getElementById("6");
+        six.innerHTML = "";
+        let seven = document.getElementById("7");
+        seven.innerHTML = "";
+        let eight = document.getElementById("8");
+        eight.innerHTML = "";
     }
 
     myModule.newGame = function() {
+        //resets all variables to initial values;
         myModule.turnArray = [0,0,0,0,0,0,0,0,0];
         myModule.count = 0;
+        myModule.gameOver = false;
         myModule.playerTurn = 1;
         myModule.gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        
+        //recreates players
         myModule.player1 = player("player1", 1);
         myModule.player2 = player("player2", 2);
-        gamePlay.createBoard(gamePlay.gameBoard);
-        gamePlay.createButtons();
-        return myModule;
+        
+        gamePlay.resetBoard();
     }
-
     return myModule;
 })();
+
 let gamePlay = gameBoard;
 gamePlay.createBoard(gamePlay.gameBoard);
 gamePlay.createButtons();
@@ -153,26 +170,5 @@ gamePlay.createButtons();
 
 restart.addEventListener('click', () => {
     gamePlay.newGame();
-    console.log(gameBoard);
+    playersTurn.innerHTML = "Player X's turn";
 });
-
-//console.log(gamePlay.gameBoard);
-//console.log(gamePlay.player1.turnBol);
-//console.log(gamePlay.player2.turnBol);
-
-/*
-function createBoard(array){
-    let gridContainer = document.createElement("div");
-    gridContainer.classList.add("gridContainer");
-    gridContainer.innerHTML = "";
-    for (let i = 0; i < 9; i++){
-        let gridElement = document.createElement("div");
-        gridElement.id = i;
-        gridElement.innerHTML = "O";
-        gridElement.classList.add("gridElement");
-        gridContainer.appendChild(gridElement);
-        //console.log(i);
-    }
-    document.body.appendChild(gridContainer);
-}
-*/
